@@ -1,39 +1,44 @@
 # coding=utf-8
 class ResponseCode:
 
-    # 成功
+    """ success"""
     SUCCESS = 200
 
-    # 内部服务错误， 处理时发生内部错误
+    """ server error when process internal"""
     INTERNAL_ERR = 400
 
-    # 请求参数错误， 设备入参校验失败
+    """ request parameter error, device parameter validation failed"""
     PARAMETER_ERR = 460
 
+    """ device not exist"""
     DEVICE_NOT_EXISTS = 402
 
+    """auth failed"""
     AUTH_ERR = 401
 
-    # 请求过于频繁，设备端处理不过来时可以使用
+    """ request are too frequency"""
     TOO_MANY_REQUESTS = 429
 
-    # 设备端注册服务执行错误
+    """ device service execution error"""
     COMMAND_HANDLER_EXECUTION_FAILED = 500
 
+    """ device handler not registered"""
     COMMAND_HANDLER_NOT_REGISTERED = 1101
 
+    """ user define error code"""
     USER_DEFINED_ERR_CODE = 2000
 
+    """ payload must be json format"""
     PAYLOAD_MUST_BE_JSON_FORMAT = 6207
 
-    # 服务器端超时，返回的响应码
+    """ server timeout"""
     TIME_OUT = 6205
 
-    # 设备端等待响应超时
+    """ local timeout"""
     LOCAL_TIME_OUT = 6305
 
-    # RRPC的响应服务没有提供
+    """ rrpc response service is not provided"""
     RRPC_HANDLER_NOT_FOUND = 10001
 
-    # 从100000到110000用于设备自定义错误信息，和云端错误信息加以区分
+    """ device customized error code"""
     DEVICE_DEFINED_ERR = 100000
