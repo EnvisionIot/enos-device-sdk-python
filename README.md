@@ -51,7 +51,7 @@ pip install --upgrade setuptools
 1. Obtain the source code of EnOS Device SDK for Python.
    - From GitHub:
     ```
-    git clone https://github.com/EnvisionIot/enos-mqtt-sdk-python.git
+    git clone https://github.com/EnvisionIot/enos-device-sdk-python.git
     ```
    - From EnOS SDK Center. Click **SDK Center** from the left navigation of EnOS Console, and obtain the SDK source code by clicking the GitHub icon in the **Obtain** column.
 
