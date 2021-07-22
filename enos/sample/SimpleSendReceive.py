@@ -1,6 +1,7 @@
 import logging
 
 from enos.core.MqttClient import MqttClient
+from enos.core.internal.Ciphers import Ciphers
 from enos.core.message.IResponseCallback import IResponseCallback
 from enos.message.downstream.tsl.MeasurepointSetCommand import MeasurepointSetCommand
 from enos.message.downstream.tsl.MeasurepointSetReply import MeasurepointSetReply
@@ -79,8 +80,10 @@ def on_failure(exception):
 # post measure points data via MQTT
 def post_measure_points():
     measure_point_request = MeasurepointPostRequest.builder() \
-        .add_measurepoint('measurepoint', random.randint(100, 200)) \
-        .set_timestamp(int(time.time())) \
+        .add_measurepoint('mpoint', random.randint(100, 200)) \
+        .set_product_key(sub_product_key) \
+        .set_device_key(sub_device_key) \
+        .set_timestamp(int(time.time() * 1000)) \
         .build()
 
     measure_point_response = client.publish(measure_point_request)
@@ -90,8 +93,10 @@ def post_measure_points():
 
 def post_measure_points_async():
     measure_point_request = MeasurepointPostRequest.builder() \
-        .add_measurepoint('measurepoint', random.randint(100, 200)) \
-        .set_timestamp(int(time.time())) \
+        .add_measurepoint('mpoint', random.randint(100, 200)) \
+        .set_product_key(sub_product_key) \
+        .set_device_key(sub_device_key) \
+        .set_timestamp(int(time.time() * 1000)) \
         .build()
 
     # publish async with callback
@@ -139,7 +144,8 @@ if __name__ == "__main__":
     client.get_profile().set_auto_reconnect(True)
 
     # set the certificate files for bi-directional certification
-    client.get_profile().set_ssl_context(ca_file, cer_file, key_file, key_file_password)
+    # ECC or RSA ciphers can be specify
+    client.get_profile().set_ssl_context(ca_file, cer_file, key_file, key_file_password, Ciphers.ECC)
 
     # set basic logger level
     client.setup_basic_logger(logging.INFO)

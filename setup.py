@@ -5,9 +5,9 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='enos-mqtt-sdk-python',
-    version='0.1.0',
+    version='0.1.1',
     author='EnvisionIot',
-    author_email='EnvisionIot',
+    author_email='',
     description='EnOS MQTT SDK for Python',
     long_description=long_description,
     long_description_content_type='text/markdown',

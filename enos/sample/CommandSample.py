@@ -45,11 +45,13 @@ if __name__ == "__main__":
                         SampleHelper.GW_DEVICE_SECRET)
     client.get_profile().set_auto_reconnect(True)  # if connection interrupted, the client can automaticlly reconnect
     client.setup_basic_logger('INFO')
-    client.connect()  # connect in sync
 
     # register a msg handler to handle the downstream measurepoint set command
     client.register_arrived_message_handler(MeasurepointSetCommand.get_class(), set_measurepoint_command_handler)
     client.register_arrived_message_handler(MeasurepointGetCommand.get_class(), get_measurepoint_command_handler)
+
+    # connect
+    client.connect()
 
     while True:
         sleep(5)

@@ -44,6 +44,7 @@ class Profile(object):
         self.__ssl_private_key_path = ''
         self.__ssl_private_key_pass = None
         self.__ssl_certificate_path = ''
+        self.__ssl_ciphers = None
 
         self.__mqtt_clean_session = True
         self.__auto_reconnect = True
@@ -192,6 +193,13 @@ class Profile(object):
         self.__ssl_certificate_path = ssl_certificate_path
         return self
 
+    def get_ssl_ciphers(self):
+        return self.__ssl_ciphers
+
+    def set_ssl_ciphers(self, ssl_ciphers):
+        self.__ssl_ciphers = ssl_ciphers
+        return self
+
     def get_ssl_private_key_pass(self):
         return self.__ssl_private_key_pass
 
@@ -199,11 +207,13 @@ class Profile(object):
         self.__ssl_private_key_pass = ssl_private_key_pass
         return self
 
-    def set_ssl_context(self, ssl_root_ca_path, ssl_certificate_path, ssl_private_key_path, ssl_private_key_pass=None):
+    def set_ssl_context(self, ssl_root_ca_path, ssl_certificate_path, ssl_private_key_path,
+                        ssl_private_key_pass=None, ssl_ciphers=None):
         self.__ssl_root_ca_path = ssl_root_ca_path
         self.__ssl_certificate_path = ssl_certificate_path
         self.__ssl_private_key_path = ssl_private_key_path
         self.__ssl_private_key_pass = ssl_private_key_pass
+        self.__ssl_ciphers = ssl_ciphers
         self.__ssl_secured = True
         return self
 
@@ -245,13 +255,15 @@ class Profile(object):
     def get_auto_login_sub_device(self):
         return self.__auto_login_sub_device
 
-    def create_ssl_context(self, ciphers=None):
+    def create_ssl_context(self):
         ca_certs = self.__ssl_root_ca_path
         cert_file = self.__ssl_certificate_path
         key_file = self.__ssl_private_key_path
         key_pass = self.__ssl_private_key_pass
+        ciphers = self.__ssl_ciphers
         cert_reqs = ssl.CERT_REQUIRED
         tls_version = ssl.PROTOCOL_SSLv23
+
 
         if ssl is None:
             raise ValueError('This platform has no SSL/TLS.')

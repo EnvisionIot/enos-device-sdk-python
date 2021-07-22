@@ -108,6 +108,7 @@ client.close()
 * [Receiving Commands from Cloud](/enos/sample/CommandSample.py)
 * [Passing Through Device Information or Receiving Passed-through Information from Cloud](/enos/sample/ModelUpRawSample.py)
 * [Managing Sub-devices](/enos/sample/SubDeviceSample.py)
+* [Over-the-air Firmware Upgrade](/enos/samples/OtaSample.py)
 
 <a name="information"></a>
 
@@ -119,3 +120,4 @@ client.close()
 
 ## Release Notes
 - 2019/11/15(0.1.0): Reconstruction and new functions added.
+- 2021/07/23(0.1.1): Support specified encryption algorithms suite.

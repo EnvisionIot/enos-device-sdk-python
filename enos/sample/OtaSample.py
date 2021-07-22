@@ -5,6 +5,7 @@ from enos.message.upstream.ota.OtaGetVersionRequest import OtaGetVersionRequest
 from enos.message.upstream.ota.OtaProgressReportRequest import OtaProgressReportRequest
 from enos.message.upstream.ota.OtaVersionReportRequest import OtaVersionReportRequest
 from enos.sample.SampleHelper import SampleHelper
+import enos.core.constant.OTAUpdateFailureCause as OTAUpdateFailureCause
 
 
 def ota_get_version_report():
@@ -58,6 +59,13 @@ def upgrade_firmware_handler(arrived_message, path_list):
     # firmware upgrade success, report new version
     ota_version_report(firmware.version)
 
+def upgrade_firmware_download_failed_handler(arrived_message, path_list):
+    firmware = arrived_message.get_firmware_info()
+    print("receive command: ", firmware.file_url, firmware.version)
+
+    # TODO: download firmware from firmware.fileUrl
+    # but download failed
+    ota_report_progress(OTAUpdateFailureCause.FIRMWARE_DOWNLOAD_FAILED_CODE, '')
 
 if __name__ == "__main__":
     client = MqttClient(SampleHelper.TCP_SERVER_URL, SampleHelper.GW_PRODUCT_KEY,
@@ -66,6 +74,10 @@ if __name__ == "__main__":
     client.connect()  # connect in sync
     # register a handle_msg to implement the Ota function, e.g: upgrade firmware
     client.register_arrived_message_handler(OtaUpgradeCommand().get_class(), upgrade_firmware_handler)
+    
+    # register a handler for upgrade failed.
+    client.register_arrived_message_handler(OtaUpgradeCommand().get_class(), upgrade_firmware_download_failed_handler)
+    
     ota_version_report(1.0)
     ota_get_version_report()
 

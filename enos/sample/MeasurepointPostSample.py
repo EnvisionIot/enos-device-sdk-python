@@ -13,7 +13,7 @@ from enos.core.MqttClient import MqttClient
 def post_measure_points():
     measure_point_request = MeasurepointPostRequest.builder() \
         .add_measurepoint('wywpoint2', random.randint(100, 200)) \
-        .set_timestamp(int(time.time())) \
+        .set_timestamp(int(time.time() * 1000)) \
         .build()
 
     measure_point_response = client.publish(measure_point_request)
